@@ -6,8 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>You're Hacked!</title>
-    <style>
-        /* General Styles */
+    <style>                                                                                      /* General Styles */
         * {
             margin: 0;
             padding: 0;
@@ -125,6 +124,19 @@
             white-space: pre-wrap;
         }
 
+        /* View Count Styles */
+        #viewCount {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: red;
+            font-size: 14px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+
         /* Responsive Styles */
         @media (max-width: 768px) {
             .terminal-box {
@@ -148,6 +160,9 @@
             <div id="loadingBar"></div>
         </div>
     </div>
+
+    <!-- View Count Display -->
+    <div id="viewCount">Views: <span id="viewCountValue">0</span></div>
 
     <!-- Terminal Box -->
     <div class="terminal-box" id="terminalBox">
@@ -175,6 +190,7 @@
                 document.getElementById('terminalBox').style.display = 'block';
                 startMatrixRain();
                 displayTerminalContent(); // Call displayTerminalContent after loading is complete
+                updateViewCount(); // Update view count here
             }, 4200); // match loading duration
         });
 
@@ -270,8 +286,20 @@
 
             terminal.innerHTML = content;
         }
+
+        // Function to update and display view count
+        function updateViewCount() {
+            let viewCount = localStorage.getItem('viewCount');
+            if (viewCount === null) {
+                viewCount = 0;
+            } else {
+                viewCount = parseInt(viewCount);
+            }
+            viewCount++;
+            localStorage.setItem('viewCount', viewCount);
+            document.getElementById('viewCountValue').innerText = viewCount;
+        }
     </script>
 </body>
 
 </html>
-
